@@ -1,6 +1,6 @@
 {
   "name": "@campkit/rest",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "author": "Roger Rodriguez",
   "license": "UNLICENSED",
   "main": "dist/index.js",
