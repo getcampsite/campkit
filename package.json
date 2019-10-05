@@ -14,6 +14,7 @@
   "scripts": {
     "postinstall": "lerna bootstrap",
     "format": "prettier  --config .prettierrc --write 'packages/*/*.js' 'packages/*/!(node_modules)/**/*.js'",
+    "start": "lerna exec --parallel -- yarn start",
     "lint": "lerna exec --parallel -- yarn lint",
     "build": "lerna exec --parallel -- yarn build",
     "test": "echo \"Error: no test specified\" && exit 1"
