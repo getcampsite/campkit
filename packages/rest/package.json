@@ -11,7 +11,7 @@
   ],
   "scripts": {
     "start": "tsdx watch",
-    "build": "tsdx build",
+    "build": "tsdx build --target node --format cjs",
     "test": "tsdx test",
     "lint": "tsdx lint"
   },
