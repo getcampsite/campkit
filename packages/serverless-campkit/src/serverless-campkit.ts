@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { getControllerMetadata, RouteDefinition } from '@campkit/rest';
 
 function debug(msg: string, a?: any) {
@@ -7,7 +8,7 @@ function debug(msg: string, a?: any) {
   console.log(' ');
 }
 
-export class ServerlessPlugin {
+export default class ServerlessCampkit {
   private servicePath?: string;
   private entrypoint?: string;
   private serviceName?: string;
@@ -187,7 +188,7 @@ export class ServerlessPlugin {
     this.serverless.service.functions[methodName] = {
       name: routeName,
       // handler: `${this.entrypoint}.${functionName}`,
-      handler: `./main.handler`,
+      handler: `${this.entrypoint}.handler`,
       timeout: 20,
       memorySize: 1024,
       events: [

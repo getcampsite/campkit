@@ -1,17 +1,16 @@
 {
-  "name": "@campkit/serverless",
-  "version": "0.0.1",
+  "name": "serverless-campkit",
+  "version": "0.0.2",
   "author": "Roger Rodriguez",
   "license": "UNLICENSED",
   "main": "dist/index.js",
-  "module": "dist/campkit-serverless.esm.js",
   "typings": "dist/index.d.ts",
   "files": [
     "dist"
   ],
   "scripts": {
     "start": "tsdx watch",
-    "build": "tsdx build",
+    "build": "tsdx build --target node --format cjs",
     "test": "tsdx test",
     "lint": "tsdx lint"
   },
@@ -35,6 +34,7 @@
     "husky": "^3.0.8",
     "tsdx": "^0.9.3",
     "tslib": "^1.10.0",
-    "typescript": "^3.6.3"
+    "typescript": "^3.6.3",
+    "reflect-metadata": "0.1.13"
   }
 }
