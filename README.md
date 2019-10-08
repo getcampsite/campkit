@@ -2,13 +2,15 @@
 
 <h3 align="center">Build serverless Node.js microservices fast.</h3>
 
+<br/>
+
 [![serverless](http://public.serverless.com/badges/v3.svg)](https://serverless.com)
 [![node](https://img.shields.io/badge/node-%3E%3D%2010.0.0-brightgreen)](https://nodejs.org)
 [![awesome](https://img.shields.io/badge/stars-%E2%98%85%E2%98%85%E2%98%85%E2%98%85%E2%98%85-brightgreen)](https://github.com/getcampsite/campkit)
 
 ## Intro
 
-_This project is under heavy development._
+**_This project is under heavy development._**
 
 Campkit is an opinionated Node.js framework for building serverless microservices. It makes a bunch of decisions so that you don't have to. Currently it works best with aws lambda and the serverless framework.
 
@@ -21,9 +23,9 @@ Campkit is an opinionated Node.js framework for building serverless microservice
 
 ## Works with provider
 
-- [x] **Amazon Web Service - Lambda**
-- [ ] **Google Cloud Platform - Cloud functions**
-- [ ] **Microsoft Azure - Cloud functions**
+- [x] Amazon Web Service - Lambda
+- [ ] Google Cloud Platform - Cloud functions
+- [ ] Microsoft Azure - Cloud functions
 
 ## At a glance
 
