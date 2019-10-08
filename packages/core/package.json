@@ -1,17 +1,23 @@
 {
   "name": "@campkit/core",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "dist/index.js",
   "module": "dist/campkit-core.esm.js",
   "typings": "dist/index.d.ts",
   "files": [
     "dist"
   ],
+  "homepage": "https://github.com/getcampsite/campkit/tree/master/packages/core",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/getcampsite/campkit.git"
+  },
   "scripts": {
     "start": "tsdx watch",
     "build": "tsdx build --target node --format cjs",
     "test": "tsdx test",
-    "lint": "tsdx lint"
+    "lint": "tsdx lint",
+    "publish": "npm publish --access public"
   },
   "peerDependencies": {},
   "husky": {
