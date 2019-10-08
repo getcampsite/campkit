@@ -1,51 +1,54 @@
 /**
  * Internal
  */
-import { Logger } from './common';
 import { getAppMetadata } from './app.decorator';
 
 /**
  * Interfaces
  */
+interface GenericObject {
+  [key: string]: any;
+}
 
-// interface Module {
-//   run();
-// }
+// 'get' | 'post' | 'put' | 'patch' | 'delete' | 'options' | 'head';
+interface HttpRequest {
+  method: string;
+  path: string;
+  headers: GenericObject;
+  body: GenericObject; // null | json.stringify | {}
+}
 
-const logger = new Logger('CampkitApplication');
+export interface CampkitHTTPRequest extends HttpRequest {}
 
 export interface CampkitApplicationOptions {
   module: any;
 }
 
 export class CampkitApplication {
-  private module: any;
+  private appInstance: any;
 
   constructor(options: CampkitApplicationOptions) {
-    this.module = options.module;
+    this.appInstance = options.module;
   }
 
   protected run(requestOptions: any) {
-    const { module } = this;
-    const appMetadata = getAppMetadata(module);
-
-    const appClass = new module(appMetadata);
+    const { appInstance } = this;
+    const appInstanceMetadata = getAppMetadata(appInstance);
+    const appClass = new appInstance(appInstanceMetadata);
     const appOutput = appClass.run(requestOptions);
 
     if (!appOutput) {
       throw Error('no app output');
     }
 
-    logger.log({ appClass, appMetadata });
-
     return appOutput;
   }
 
   protected handleResponse(response: any, isError: boolean = false) {
-    const { module } = this;
+    const { appInstance } = this;
     if (isError) {
-      return module.onError(response);
+      return appInstance.onError(response);
     }
-    return module.onSuccess(response);
+    return appInstance.onSuccess(response);
   }
 }

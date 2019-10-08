@@ -1,9 +1,3 @@
-import { Logger } from './common';
-
-// export interface Controller {}
-
-const logger = new Logger('@App()');
-
 export interface AppOptions {
   name: string;
   controllers: any[];
@@ -13,10 +7,8 @@ export interface AppOptions {
 
 export function App(options: AppOptions): ClassDecorator {
   return (target: object) => {
-    logger.log({ options, target });
-
+    // logger.log({ options, target });
     // const appName = options.name;
-
     Reflect.defineMetadata('app', options, target);
     // Reflect.defineMetadata(SCOPE_OPTIONS_METADATA, scopeOptions, target);
   };

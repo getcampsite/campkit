@@ -11,6 +11,7 @@ import { Logger } from './common';
 import {
   CampkitApplication,
   CampkitApplicationOptions,
+  CampkitHTTPRequest,
 } from './campkit.application';
 
 /**
@@ -88,18 +89,13 @@ export class AWSLambdaApplication extends CampkitApplication {
       },
       body: JSON.stringify(body),
     };
-    // return context.succeed({
-    //   statusCode,
-    //   headers: {
-    //     ...headers,
-    //     'x-campkit': true,
-    //   },
-    //   body: JSON.stringify(body),
-    // });
   }
 }
 
-function mapApiGatewayEventToHttpRequest({ event, context }: LambdaInput) {
+function mapApiGatewayEventToHttpRequest({
+  event,
+  context,
+}: LambdaInput): CampkitHTTPRequest {
   const headers = Object.assign(
     {
       'Content-Length': 0,
@@ -110,8 +106,8 @@ function mapApiGatewayEventToHttpRequest({ event, context }: LambdaInput) {
   // NOTE: API Gateway is not setting Content-Length header on requests even when they have a body
   if (event.body && !headers['Content-Length']) {
     const body = getEventBody(event);
-    if (body) {
-      headers['Content-Length'] = Buffer.byteLength(body);
+    if (Object.keys(body).length) {
+      headers['Content-Length'] = Buffer.byteLength(JSON.stringify(body));
     }
   }
 
@@ -143,7 +139,7 @@ function getEventBody(event: LambdaEvent) {
     // return Buffer.from(event.body, event.isBase64Encoded ? 'base64' : 'utf8');
     return event.body;
   }
-  return null;
+  return {};
 }
 
 function clone(json: object) {
