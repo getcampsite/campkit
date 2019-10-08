@@ -11,13 +11,11 @@ const ControllerMetadata = Symbol('Controller');
 /**
  * Interface defining options that can be passed to `@Controller()` decorator
  *
- * @publicApi
+ * readonly name: string;
+ *
  */
 export interface ControllerOptions {
-  readonly name: string;
   readonly basePath?: string;
-  readonly private?: boolean;
-  readonly cors?: boolean;
 }
 
 /**
@@ -27,22 +25,39 @@ export interface ControllerOptions {
  **/
 
 export function Controller(options: ControllerOptions): ClassDecorator {
+  const path = options.basePath;
+  const scopeOptions = 'scopeOptions';
+
   // return (target: object) => {
+  //   logger.log({ options, path, target });
   //   Reflect.defineMetadata(PATH_METADATA, path, target);
   //   Reflect.defineMetadata(SCOPE_OPTIONS_METADATA, scopeOptions, target);
   // };
 
   return (target: any) => {
-    logger.log({ options, target });
+    // logger.log({ options, target });
 
-    const prefix = options.name;
-    Reflect.defineMetadata('prefix', prefix, target);
+    // const prefix = options.name;
+    // Reflect.defineMetadata('prefix', prefix, target);
+    Reflect.defineMetadata(
+      'routes.basePath',
+      { basePath: options.basePath },
+      target
+    );
 
     // Since routes are set by our methods this should almost never be true (except the controller has no methods)
     if (!Reflect.hasMetadata('routes', target)) {
       Reflect.defineMetadata('routes', [], target);
     }
   };
+}
+
+export function getControllerRoutesMetadata(controllerClass: any) {
+  return Reflect.getMetadata('routes', controllerClass);
+}
+
+export function getControllerOptionsMetadata(controllerClass) {
+  return Reflect.getMetadata('routes.basePath', controllerClass);
 }
 
 export function getControllerMetadata(klass) {

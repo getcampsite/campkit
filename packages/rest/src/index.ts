@@ -1,8 +1,8 @@
-export {
-  Controller,
-  ControllerOptions,
-  getControllerMetadata,
-} from './controller.decorator';
-export { Get, LambdaOptions, RouteDefinition } from './get.decorator';
+/*
+ * Campkit @rest
+ */
+import 'reflect-metadata';
 
-export { RestApp } from './rest.application';
+export * from './controller.decorator';
+export * from './request-mapping.decorator';
+export * from './rest.application';

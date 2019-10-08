@@ -28,7 +28,9 @@
     "trailingComma": "es5"
   },
   "dependencies": {
-    "reflect-metadata": "0.1.13"
+    "reflect-metadata": "0.1.13",
+    "radix-router": "3.0.1",
+    "query-string": "6.8.3"
   },
   "devDependencies": {
     "@types/jest": "^24.0.18",
