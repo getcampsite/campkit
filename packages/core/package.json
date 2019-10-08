@@ -17,7 +17,7 @@
     "build": "tsdx build --target node --format cjs",
     "test": "tsdx test",
     "lint": "tsdx lint",
-    "publish": "npm publish --access public"
+    "_publish": "npm publish --access public"
   },
   "peerDependencies": {},
   "husky": {
