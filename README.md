@@ -19,7 +19,7 @@ Campkit is an opinionated Node.js framework for building serverless microservice
 - small & simple
 - define your service as a class annotating it to provide configuration
 - path and query parameters are automatically injected into the class method
-- service discovery built in ~(coming soon)~
+- service discovery built in _(coming soon)_
 
 ## Works with provider
 
