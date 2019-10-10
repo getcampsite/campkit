@@ -17,6 +17,8 @@
     "start": "lerna exec --parallel -- yarn start",
     "lint": "lerna exec --parallel -- yarn lint",
     "build": "lerna exec --parallel -- yarn build",
+    "makelive": "lerna publish",
+    "list": "lerna ls",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {

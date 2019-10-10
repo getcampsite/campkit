@@ -1,19 +1,29 @@
 {
   "name": "@campkit/rest",
   "version": "0.0.1",
-  "author": "Roger Rodriguez",
-  "license": "UNLICENSED",
+  "author": "Roger Rodriguez <roger@rrod.co>",
+  "description": "Build serverless Node.js microservices fast",
+  "license": "MIT",
+  "homepage": "https://github.com/getcampsite/campkit/tree/master/packages/rest",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/getcampsite/campkit.git"
+  },
+  "keywords": [
+    "microservice",
+    "serverless",
+    "node microservice",
+    "campkit"
+  ],
+  "bugs": {
+    "url": "https://github.com/getcampsite/campkit/issues"
+  },
   "main": "dist/index.js",
   "module": "dist/campkit-rest.esm.js",
   "typings": "dist/index.d.ts",
   "files": [
     "dist"
   ],
-  "homepage": "https://github.com/getcampsite/campkit/tree/master/packages/rest",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/getcampsite/campkit.git"
-  },
   "scripts": {
     "start": "tsdx watch",
     "build": "tsdx build --target node --format cjs",
@@ -36,7 +46,8 @@
   "dependencies": {
     "reflect-metadata": "0.1.13",
     "radix-router": "3.0.1",
-    "query-string": "6.8.3"
+    "query-string": "6.8.3",
+    "@campkit/core": "0.0.x"
   },
   "devDependencies": {
     "@types/jest": "^24.0.18",
