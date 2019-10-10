@@ -1,9 +1,18 @@
 {
-  "lerna": "3.16.4",
-  "packages": ["packages/*"],
-  "npmClient": "yarn",
-  "useWorkspaces": true,
   "version": "independent",
+  "packages": ["packages/*"],
+  "npmClient": "npm",
+  "useWorkspaces": true,
+  "command": {
+    "publish": {
+      "ignoreChanges": ["ignored-file", "*.md"],
+      "message": "chore(release): publish"
+    },
+    "bootstrap": {
+      "ignore": "component-*",
+      "npmClientArgs": ["--no-package-lock"]
+    }
+  },
   "changelog": {
     "repo": "@campsite/campkit",
     "labels": {
