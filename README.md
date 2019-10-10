@@ -17,7 +17,7 @@ Campkit is an opinionated Node.js framework for building serverless microservice
 ## Quick start
 
 ```sh
-npx campkit create someServiceName
+npx @campkit/cli create someServiceName
 ```
 
 ## Features
