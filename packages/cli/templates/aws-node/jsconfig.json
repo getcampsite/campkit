@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "module": "commonjs",
+    "target": "es2017",
+    "experimentalDecorators": true
+  },
+  "exclude": ["node_modules", "**/node_modules/*"]
+}

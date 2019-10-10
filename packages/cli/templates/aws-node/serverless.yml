@@ -1,0 +1,36 @@
+service:
+  name: ${self:custom.campkit.name}
+provider:
+  name: aws
+  runtime: nodejs10.x
+  stage: ${env:STAGE, 'dev'}
+  region: ${env:REGION, 'us-east-1'}
+plugins:
+  - serverless-webpack
+  - serverless-campkit
+  - serverless-offline
+custom:
+  webpack:
+    webpackConfig: 'webpack.config.js'
+    includeModules: false
+    # packager: 'yarn'
+    excludeFiles: src/**/*.test.js
+  serverless-offline:
+    port: 5004
+  campkit:
+    name: _servicename_
+    prefix: service
+package:
+  individually: true
+  excludeDevDependencies: true
+functions:
+  _servicename_:
+    name: ${self:custom.campkit.prefix}-${self:provider.stage}-${self:custom.campkit.name}
+    description: _servicename_ service created by campkit
+    timeout: 20 # in seconds, default is 6
+    memorySize: 1024 # in MB, default is 1024
+    handler: src/index.handler
+    events:
+      - http:
+          path: /_servicename_/{proxy+}
+          method: ANY
