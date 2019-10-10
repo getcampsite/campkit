@@ -32,5 +32,5 @@ functions:
     handler: src/index.handler
     events:
       - http:
-          path: /_servicename_/{proxy+}
+          path: /{proxy+}
           method: ANY

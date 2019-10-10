@@ -1,7 +1,7 @@
 import { Controller, Get } from '@campkit/rest';
 
 @Controller({
-  basePath: '/',
+  basePath: '/_servicename_',
 })
 export class _SERVICENAME_Controller {
   @Get({
