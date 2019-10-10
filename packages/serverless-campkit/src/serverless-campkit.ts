@@ -17,7 +17,7 @@ export default class ServerlessCampkit {
   private options: any;
   private serverless: any;
 
-  public hooks: any = {};
+  public hooks: any = {}; //
 
   /**
    *
