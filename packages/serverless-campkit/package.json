@@ -1,6 +1,6 @@
 {
   "name": "serverless-campkit",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "author": "Roger Rodriguez <roger@rrod.co>",
   "description": "Build serverless Node.js microservices fast",
   "license": "MIT",
@@ -29,7 +29,6 @@
     "test": "tsdx test",
     "lint": "tsdx lint"
   },
-  "peerDependencies": {},
   "husky": {
     "hooks": {
       "pre-commit": "tsdx lint"
@@ -42,14 +41,14 @@
     "trailingComma": "es5"
   },
   "dependencies": {
-    "@campkit/rest": "0.0.x"
+    "@campkit/rest": "^0.0.3"
   },
   "devDependencies": {
     "@types/jest": "^24.0.18",
     "husky": "^3.0.8",
+    "reflect-metadata": "0.1.13",
     "tsdx": "^0.9.3",
     "tslib": "^1.10.0",
-    "typescript": "^3.6.3",
-    "reflect-metadata": "0.1.13"
+    "typescript": "^3.6.3"
   }
 }
