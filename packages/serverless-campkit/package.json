@@ -1,6 +1,6 @@
 {
   "name": "serverless-campkit",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "author": "Roger Rodriguez",
   "license": "MIT",
   "main": "dist/index.js",
