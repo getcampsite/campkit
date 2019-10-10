@@ -5,19 +5,21 @@
   ],
   "scripts": {
     "start": "lerna bootstrap",
+    "postinstall": "lerna bootstrap",
     "makelive": "lerna publish",
     "list": "lerna ls",
-    "clean": "lerna clean",
-    "postinstall": "lerna bootstrap",
-    "format": "prettier  --config .prettierrc --write 'packages/*/*.js' 'packages/*/!(node_modules)/**/*.js'",
+    "clean": "node ./scripts/clean.js",
+    "test": "node ./scripts/test.js",
+    "changelog": "lerna-changelog",
+    "format": "prettier --write 'packages/**/*.{js,ts,json}'",
     "dev:start": "lerna exec --parallel -- yarn start",
     "dev:lint": "lerna exec --parallel -- yarn lint",
-    "dev:build": "lerna exec --parallel -- yarn build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev:build": "lerna exec --parallel -- yarn build"
   },
   "devDependencies": {
     "lerna": "3.16.4",
     "lerna-changelog": "0.8.2",
-    "prettier": "1.18.2"
+    "prettier": "1.18.2",
+    "rimraf": "3.0.0"
   }
 }
