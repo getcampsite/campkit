@@ -14,7 +14,7 @@ In order to help people manage their campkit projects, this CLI tool has been cr
 ## Installation
 
 ```shell
-npx campkit create someServiceName
+npx @campkit/cli create someServiceName
 ```
 
 ## Usage
