@@ -1,15 +1,7 @@
 {
-  "name": "campkit",
-  "version": "1.0.0",
-  "description": "Build serverless Node.js microservices fast",
-  "main": "index.js",
   "workspaces": [
     "packages/*"
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/getcampsite/campkit.git"
-  },
   "scripts": {
     "postinstall": "lerna bootstrap",
     "format": "prettier  --config .prettierrc --write 'packages/*/*.js' 'packages/*/!(node_modules)/**/*.js'",
