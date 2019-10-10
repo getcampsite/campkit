@@ -23,7 +23,7 @@
     "templates"
   ],
   "bin": {
-    "campkit": "./src/index.js"
+    "campkit": "src/index.js"
   },
   "scripts": {},
   "dependencies": {
