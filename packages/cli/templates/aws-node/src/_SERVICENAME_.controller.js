@@ -1,19 +1,24 @@
-const { Controller, Get } = require('@campkit/rest');
+import { Controller, Get } from '@campkit/rest';
 
 @Controller({
   basePath: '/',
 })
-class _SERVICENAME_Controller {
+export class _SERVICENAME_Controller {
+  @Get({
+    path: '/',
+  })
+  getAll() {
+    return {
+      message: 'Go Serverless',
+    };
+  }
+
   @Get({
     path: '/:id',
   })
   getOne({ params }) {
     return {
-      id: params.id,
+      id: params.id || '',
     };
   }
 }
-
-module.exports = {
-  _SERVICENAME_Controller,
-};

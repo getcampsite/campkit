@@ -5,7 +5,6 @@ const slsw = require('serverless-webpack');
 module.exports = (async () => {
   const accountId = await slsw.lib.serverless.providers.aws.getAccountId();
   return {
-    // entry: "./src/index",
     entry: slsw.lib.entries,
     mode: slsw.lib.webpack.isLocal ? 'development' : 'production',
     devtool: 'source-map',
@@ -20,13 +19,16 @@ module.exports = (async () => {
     },
     output: {
       libraryTarget: 'commonjs',
-      path: resolve(__dirname, 'dist'), // .webpack
+      path: resolve(__dirname, 'dist'),
       filename: '[name].js',
     },
     module: {
       rules: [
-        // all files with a `.ts` or `.tsx` extension will be handled by `ts-loader`
-        { test: /\.tsx?$/, loader: 'ts-loader' },
+        {
+          test: /\.m?js$/,
+          exclude: /(node_modules|bower_components)/,
+          use: 'babel-loader',
+        },
       ],
     },
   };

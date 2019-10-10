@@ -18,7 +18,7 @@ async function handleCreateCmd(pkg, options) {
   let template;
   const prompt = new Select({
     message: 'Choose a template',
-    choices: ['aws node typescript'],
+    choices: ['aws node', 'aws node typescript'],
   });
 
   try {
@@ -126,6 +126,12 @@ async function installServiceDeps(pathToService, serviceName, templateName) {
     path.resolve(pathToService, './.gitignore')
   );
 
+  // fix babelrc
+  await fs.move(
+    path.resolve(pathToService, './babelrc'),
+    path.resolve(pathToService, './.babelrc')
+  );
+
   // Install deps
   process.chdir(pathToService);
 
@@ -159,12 +165,16 @@ async function installServiceDeps(pathToService, serviceName, templateName) {
 
 async function installNodeDeps() {
   let depsDev = [
-    'serverless',
+    'serverless@1.54.0',
     'serverless-campkit',
-    'serverless-offline',
-    'serverless-webpack',
-    'webpack',
-    'aws-sdk',
+    'serverless-offline@5.12.0',
+    'serverless-webpack@5.3.1',
+    'webpack@4.41.0',
+    'babel-loader@8.0.6',
+    '@babel/core@7.6.3',
+    '@babel/preset-env@7.6.3',
+    '@babel/plugin-proposal-decorators@7.6.0',
+    '@babel/plugin-proposal-class-properties@7.5.5',
   ].sort();
 
   let deps = ['@campkit/core', '@campkit/rest'].sort();
@@ -183,16 +193,16 @@ async function installNodeDeps() {
 
 async function installTypeScriptDeps() {
   let depsDev = [
-    'serverless',
+    'serverless@1.54.0',
     'serverless-campkit',
-    'serverless-offline',
-    'serverless-webpack',
-    'webpack',
+    'serverless-offline@5.12.0',
+    'serverless-webpack@5.3.1',
+    'webpack@4.41.0',
+    'ts-loader@6.2.0',
+    'typescript@3.6.3',
     'aws-sdk',
-    'ts-loader',
-    'typescript',
-    '@types/aws-lambda',
-    '@types/node',
+    '@types/aws-lambda@8.10.33',
+    '@types/node@10.12.18',
   ].sort();
 
   let deps = ['@campkit/core', '@campkit/rest'].sort();
