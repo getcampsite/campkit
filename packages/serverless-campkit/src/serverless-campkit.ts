@@ -28,44 +28,46 @@ export default class ServerlessCampkit {
     this.serverless = serverless;
     this.options = options;
 
-    debug('constructor');
+    return;
 
-    this.hooks = {
-      'before:package:initialize': () => {
-        debug('before:package:initialize');
-        // return this.configureFunctions();
-        return this.initOfflineHook();
-      },
+    // debug('constructor');
 
-      'before:invoke:local:invoke': () => {
-        debug('before:invoke:local:invoke');
-        // return this.configureFunctions();
-        return this.initOfflineHook();
-      },
+    // this.hooks = {
+    //   'before:package:initialize': () => {
+    //     debug('before:package:initialize');
+    //     // return this.configureFunctions();
+    //     return this.initOfflineHook();
+    //   },
 
-      'before:offline:start:init': () => {
-        debug('before:offline:start:init');
-        return this.initOfflineHook();
-      },
+    //   'before:invoke:local:invoke': () => {
+    //     debug('before:invoke:local:invoke');
+    //     // return this.configureFunctions();
+    //     return this.initOfflineHook();
+    //   },
 
-      'before:offline:start': () => {
-        debug('before:offline:start');
-        return this.initOfflineHook();
-      },
+    //   'before:offline:start:init': () => {
+    //     debug('before:offline:start:init');
+    //     return this.initOfflineHook();
+    //   },
 
-      // adding hook to make it work with serverless-offline plugin
-      // 'offline:start:init': () => {
-      //   debug('offline:start:init');
-      //   return this.configureFunctions();
-      // },
+    //   'before:offline:start': () => {
+    //     debug('before:offline:start');
+    //     return this.initOfflineHook();
+    //   },
 
-      // adding hook to fix aws:info:display
-      'before:info:info': () => {
-        debug('before:info:info');
-        // return this.configureFunctions();
-        return this.initOfflineHook();
-      },
-    };
+    //   // adding hook to make it work with serverless-offline plugin
+    //   // 'offline:start:init': () => {
+    //   //   debug('offline:start:init');
+    //   //   return this.configureFunctions();
+    //   // },
+
+    //   // adding hook to fix aws:info:display
+    //   'before:info:info': () => {
+    //     debug('before:info:info');
+    //     // return this.configureFunctions();
+    //     return this.initOfflineHook();
+    //   },
+    // };
 
     // const customOptions = serverless.service.custom;
 
@@ -90,83 +92,83 @@ export default class ServerlessCampkit {
     // debug('entrypoint', this.entrypoint);
   }
 
-  initOfflineHook() {
-    // debug('initOfflineHook', this.serverless.service.custom);
+  // initOfflineHook() {
+  //   // debug('initOfflineHook', this.serverless.service.custom);
 
-    const customOptions = this.serverless.service.custom;
+  //   const customOptions = this.serverless.service.custom;
 
-    debug('customOptions', customOptions);
+  //   debug('customOptions', customOptions);
 
-    this.servicePath = ((): string => {
-      return this.serverless.config.servicePath;
-    })();
-    debug('servicePath:', this.servicePath);
+  //   this.servicePath = ((): string => {
+  //     return this.serverless.config.servicePath;
+  //   })();
+  //   debug('servicePath:', this.servicePath);
 
-    this.buildFolder = customOptions.buildFolder;
-    debug('build folder', this.buildFolder);
+  //   this.buildFolder = customOptions.buildFolder;
+  //   debug('build folder', this.buildFolder);
 
-    const awsService = this.serverless.service.service;
-    this.serviceName = awsService;
-    debug('awsService name', awsService);
-    debug('stage', this.options.stage);
+  //   const awsService = this.serverless.service.service;
+  //   this.serviceName = awsService;
+  //   debug('awsService name', awsService);
+  //   debug('stage', this.options.stage);
 
-    if (!this.serverless.service.custom.entrypoint) {
-      throw new Error('you shall provide path to your entrypoint');
-    }
+  //   if (!this.serverless.service.custom.entrypoint) {
+  //     throw new Error('you shall provide path to your entrypoint');
+  //   }
 
-    this.entrypoint = this.serverless.service.custom.entrypoint;
-    debug('entrypoint', this.entrypoint);
+  //   this.entrypoint = this.serverless.service.custom.entrypoint;
+  //   debug('entrypoint', this.entrypoint);
 
-    return this.configureFunctions();
-  }
+  //   return this.configureFunctions();
+  // }
 
   /** */
 
-  public async configureFunctions() {
-    debug('importing module');
+  // public async configureFunctions() {
+  //   debug('importing module');
 
-    // const module = require(`${this.servicePath}/${this.entrypoint}`);
-    const modulePath = `${this.servicePath}/${this.entrypoint}`;
+  //   // const module = require(`${this.servicePath}/${this.entrypoint}`);
+  //   const modulePath = `${this.servicePath}/${this.entrypoint}`;
 
-    debug('modulePath', modulePath);
+  //   debug('modulePath', modulePath);
 
-    const module = await this.importModule(modulePath);
+  //   const module = await this.importModule(modulePath);
 
-    this.serverless.cli.log('Injecting configuration');
-    debug('works', module);
+  //   this.serverless.cli.log('Injecting configuration');
+  //   debug('works', module);
 
-    // const service = module.default.TenantService;
-    const service = module.default.handler();
-    debug('service metadata', Reflect.getMetadataKeys(service));
+  //   // const service = module.default.TenantService;
+  //   const service = module.default.handler();
+  //   debug('service metadata', Reflect.getMetadataKeys(service));
 
-    const routes = getControllerMetadata(service);
+  //   const routes = getControllerMetadata(service);
 
-    debug('endpoints', routes);
+  //   debug('endpoints', routes);
 
-    if (!routes) {
-      debug('no endpoints');
-      return;
-    }
+  //   if (!routes) {
+  //     debug('no endpoints');
+  //     return;
+  //   }
 
-    for (const route of routes) {
-      debug('configuring endpoint', route);
-      this.addFunctionToService(route);
-      debug('functions is');
-      debug(this.serverless.service.functions[route.methodName]);
-      debug(this.serverless.service.functions[route.methodName].events);
-    }
+  //   for (const route of routes) {
+  //     debug('configuring endpoint', route);
+  //     this.addFunctionToService(route);
+  //     debug('functions is');
+  //     debug(this.serverless.service.functions[route.methodName]);
+  //     debug(this.serverless.service.functions[route.methodName].events);
+  //   }
 
-    this.serverless.cli.log(`${routes.length} route configured`);
-  }
+  //   this.serverless.cli.log(`${routes.length} route configured`);
+  // }
 
   /**
    *
    * @param path
    */
-  public async importModule(path: string) {
-    return import(path);
-    // return require.resolve(path);
-  }
+  // public async importModule(path: string) {
+  //   return import(path);
+  //   // return require.resolve(path);
+  // }
 
   /**
    create:
@@ -181,28 +183,29 @@ export default class ServerlessCampkit {
           method: post
           cors: true
   */
-  public addFunctionToService(route: RouteDefinition) {
-    const { path, routeName, requestMethod, methodName } = route;
-    const functionName = methodName;
 
-    this.serverless.service.functions[methodName] = {
-      name: routeName,
-      // handler: `${this.entrypoint}.${functionName}`,
-      handler: `${this.entrypoint}.handler`,
-      timeout: 20,
-      memorySize: 1024,
-      events: [
-        {
-          http: {
-            path: path,
-            method: requestMethod,
-            // integration: 'lambda',
-            cors: true,
-          },
-        },
-      ],
-    };
-  }
+  // public addFunctionToService(route: RouteDefinition) {
+  //   const { path, routeName, requestMethod, methodName } = route;
+  //   const functionName = methodName;
+
+  //   this.serverless.service.functions[methodName] = {
+  //     name: routeName,
+  //     // handler: `${this.entrypoint}.${functionName}`,
+  //     handler: `${this.entrypoint}.handler`,
+  //     timeout: 20,
+  //     memorySize: 1024,
+  //     events: [
+  //       {
+  //         http: {
+  //           path: path,
+  //           method: requestMethod,
+  //           // integration: 'lambda',
+  //           cors: true,
+  //         },
+  //       },
+  //     ],
+  //   };
+  // }
 
   /**
    *
