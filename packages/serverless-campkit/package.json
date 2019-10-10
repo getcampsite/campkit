@@ -1,8 +1,8 @@
 {
   "name": "serverless-campkit",
-  "version": "0.0.2",
+  "version": "0.0.5",
   "author": "Roger Rodriguez",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [

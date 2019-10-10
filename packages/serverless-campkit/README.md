@@ -1,18 +1,20 @@
-# :package: :sparkles: Serverless Campkit Plugin
+<h1 align="center"> ⛺ Campkit </h1>
+<h3 align="center">Build serverless Node.js microservices fast.</h3>
+
+<br/>
+
+## :package: serverless-campkit
 
 [![serverless](http://public.serverless.com/badges/v3.svg)](http://www.serverless.com)
 [![npm version](https://badge.fury.io/js/serverless-campkit.svg)](https://badge.fury.io/js/serverless-campkit)
+[![gzip size](http://img.badgesize.io/https://unpkg.com/serverless-campkit@latest/dist/serverless-campkit.cjs.production.min.js?compression=gzip)](https://unpkg.com/serverless-campkit@latest/dist/serverless-campkit.cjs.production.min.js)
+
+## Intro
 
 Make `campkit` apps compatible with serverless framework.
 Ensure compatibility with serverless-offline plugin.
 
-Works with provider :
-
-- [x] **Amazon Web Service - Lambda**
-- [ ] **Google Cloud Platform - Cloud functions**
-- [ ] **Microsoft Azure - Cloud functions**
-
-This plugin will automatically update your `serverless.yml` to include any routes created by your `campkit` app.
+This plugin will automatically update your `serverless.yml` to include functionality.
 
 ## Download
 
@@ -41,12 +43,14 @@ plugins:
 ### 2 - Use campkit
 
 ```js
-import { Handler, Context } from 'aws-lambda';
-import { CampkitFactory } from '@campkit/core';
-import { AppModule } from './path/to/your/campkit/app';
+const { CampkitFactory } = require('@campkit/core');
+const { AppModule } = require('./path/to/your/app');
 
-export const handler: Handler = async (event: any, context: Context) => {
-  const app = await CampkitFactory.create(AppModule, { event, context });
-  return app;
+async function handler(event, context) {
+  return await CampkitFactory.create(AppModule, { event, context });
+}
+
+module.exports = {
+  handler,
 };
 ```
