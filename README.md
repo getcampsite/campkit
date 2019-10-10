@@ -14,6 +14,12 @@
 
 Campkit is an opinionated Node.js framework for building serverless microservices. It makes a bunch of decisions so that you don't have to. Currently it works best with aws lambda and the serverless framework.
 
+## Quick start
+
+```sh
+npx campkit create someServiceName
+```
+
 ## Features
 
 - small & simple
