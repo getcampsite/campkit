@@ -1,6 +1,6 @@
 {
   "name": "serverless-campkit",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "publishConfig": {
     "access": "public"
   },
@@ -38,7 +38,7 @@
     }
   },
   "dependencies": {
-    "@campkit/rest": "^0.0.5"
+    "@campkit/rest": "^0.0.6"
   },
   "devDependencies": {
     "@types/jest": "^24.0.18",
