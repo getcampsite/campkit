@@ -27,7 +27,7 @@
     "dist"
   ],
   "scripts": {
-    "prepublish": "npm build",
+    "prepare": "npm build",
     "start": "tsdx watch",
     "build": "tsdx build --target node --format cjs",
     "test": "tsdx test",

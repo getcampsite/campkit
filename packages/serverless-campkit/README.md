@@ -30,27 +30,10 @@ yarn add serverless-campkit
 
 ## Installation
 
-### 1 - Add it to your serverless.yml
-
-inside your project's `serverless.yml` file add `serverless-campkit` to the plugin list:
+Inside your project's `serverless.yml` file add `serverless-campkit` to the plugin list:
 
 ```YAML
 plugins:
   - serverless-campkit # <- like so
   - serverless-offline
-```
-
-### 2 - Use campkit
-
-```js
-const { CampkitFactory } = require('@campkit/core');
-const { AppModule } = require('./path/to/your/app');
-
-async function handler(event, context) {
-  return await CampkitFactory.create(AppModule, { event, context });
-}
-
-module.exports = {
-  handler,
-};
 ```
