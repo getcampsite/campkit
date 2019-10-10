@@ -7,6 +7,7 @@ const execa = require('execa');
 
 const {
   capitalizeFirstLetter,
+  makeCodeSafe,
   safePackageName,
   getInstallCmd,
   getInstallArgs,
@@ -17,7 +18,7 @@ async function handleCreateCmd(pkg, options) {
   let template;
   const prompt = new Select({
     message: 'Choose a template',
-    choices: ['aws node', 'aws node typescript'],
+    choices: ['aws node typescript'],
   });
 
   try {
@@ -52,7 +53,7 @@ async function handleTemplateCreation(templateName, servicePath, serviceName) {
 
   await renameServiceTemplateFiles(servicePath, serviceName);
 
-  await installServiceDeps(servicePath, serviceName);
+  await installServiceDeps(servicePath, serviceName, templateName);
 
   triggerSuccessMsg(servicePath, serviceName);
 
@@ -74,7 +75,7 @@ async function renameServiceNameInFiles(pathToService, serviceName) {
     // files: `${pathToService}/src/*.js`,
     files: `${pathToService}/**`,
     from: [/_SERVICENAME_/g, /_servicename_/g],
-    to: [capitalizeFirstLetter(serviceName), serviceName],
+    to: [makeCodeSafe(capitalizeFirstLetter(serviceName)), serviceName],
   };
   return replace(options);
 }
@@ -118,7 +119,7 @@ async function getProjectPath(projectPath, pkg) {
   }
 }
 
-async function installServiceDeps(pathToService, serviceName) {
+async function installServiceDeps(pathToService, serviceName, templateName) {
   // fix gitignore
   await fs.move(
     path.resolve(pathToService, './gitignore'),
@@ -148,6 +149,15 @@ async function installServiceDeps(pathToService, serviceName) {
 
   await fs.outputJSON(path.resolve(pathToService, 'package.json'), pkgJson);
 
+  switch (templateName) {
+    case 'aws-node':
+      return installNodeDeps();
+    case 'aws-node-typescript':
+      return installTypeScriptDeps();
+  }
+}
+
+async function installNodeDeps() {
   let depsDev = [
     'serverless',
     'serverless-campkit',
@@ -155,6 +165,34 @@ async function installServiceDeps(pathToService, serviceName) {
     'serverless-webpack',
     'webpack',
     'aws-sdk',
+  ].sort();
+
+  let deps = ['@campkit/core', '@campkit/rest'].sort();
+
+  const cmd = getInstallCmd();
+
+  console.log(' ');
+  console.log(chalk.cyan(`...installing dependencies`));
+  console.log(' ');
+
+  await execa(cmd, getDevInstallArgs(cmd, depsDev));
+  await execa(cmd, getInstallArgs(cmd, deps));
+
+  return true;
+}
+
+async function installTypeScriptDeps() {
+  let depsDev = [
+    'serverless',
+    'serverless-campkit',
+    'serverless-offline',
+    'serverless-webpack',
+    'webpack',
+    'aws-sdk',
+    'ts-loader',
+    'typescript',
+    '@types/aws-lambda',
+    '@types/node',
   ].sort();
 
   let deps = ['@campkit/core', '@campkit/rest'].sort();

@@ -45,10 +45,15 @@ function getInstallArgs(cmd, packages) {
   }
 }
 
+function makeCodeSafe(string) {
+  return string.replace(/-/g, '');
+}
+
 module.exports = {
   getInstallCmd,
   getInstallArgs,
   getDevInstallArgs,
   capitalizeFirstLetter,
+  makeCodeSafe,
   safePackageName,
 };
