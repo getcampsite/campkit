@@ -1,1 +1,1 @@
-# AWS Node Typescript
+# _SERVICENAME_ Service
