@@ -1,6 +1,9 @@
 {
   "name": "@campkit/cli",
   "version": "0.0.8",
+  "publishConfig": {
+    "access": "public"
+  },
   "author": "Roger Rodriguez <roger@rrod.co>",
   "description": "Build serverless Node.js microservices fast",
   "license": "MIT",
@@ -23,7 +26,7 @@
     "templates"
   ],
   "bin": {
-    "campkit": "src/index.js"
+    "campkit": "./src/index.js"
   },
   "scripts": {},
   "dependencies": {

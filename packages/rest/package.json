@@ -1,6 +1,9 @@
 {
   "name": "@campkit/rest",
   "version": "0.0.5",
+  "publishConfig": {
+    "access": "public"
+  },
   "author": "Roger Rodriguez <roger@rrod.co>",
   "description": "Build serverless Node.js microservices fast",
   "license": "MIT",
