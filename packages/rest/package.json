@@ -1,6 +1,6 @@
 {
   "name": "@campkit/rest",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "publishConfig": {
     "access": "public"
   },
@@ -41,7 +41,7 @@
     }
   },
   "dependencies": {
-    "@campkit/core": "^0.0.7",
+    "@campkit/core": "^0.0.8",
     "query-string": "6.8.3",
     "radix-router": "3.0.1",
     "reflect-metadata": "0.1.13"
