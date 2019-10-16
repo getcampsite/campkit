@@ -16,12 +16,12 @@ import { RestRouter } from './router';
 export class RestApp {
   private controllers = [];
 
-  static onSuccess(res) {
-    return res;
+  static async onSuccess(res) {
+    return await res;
   }
 
-  static onError(res) {
-    return res;
+  static async onError(res) {
+    return await res;
   }
 
   constructor(options) {
@@ -64,7 +64,9 @@ export class RestApp {
       router.addRoute({
         path: `[${route.method}]${basePath}${route.path}`,
         handler: options => {
-          return route.handler(options);
+          const controllerInstance = new controller();
+          const fn = route.handler.bind(controllerInstance);
+          return fn(options);
         },
       });
     });
