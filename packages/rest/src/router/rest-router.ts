@@ -42,12 +42,14 @@ export class RestRouter {
   public find() {
     const { path, body } = this.httpRequest;
     const route = this.router.lookup(this.pathWithoutQueryString);
+    const queryStringParams = ('' + path).split('?')[1];
 
-    // ?some=param
-    const qs = queryString.parse(('' + path).split('?')[1], {
-      parseNumbers: true,
-      parseBooleans: true,
-    });
+    const qs = queryStringParams
+      ? queryString.parse(queryStringParams, {
+          parseNumbers: true,
+          parseBooleans: true,
+        })
+      : {};
 
     let augmentedRoute = {
       ...route,
