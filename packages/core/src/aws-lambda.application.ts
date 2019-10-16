@@ -51,14 +51,14 @@ export class AWSLambdaApplication extends CampkitApplication {
     this.context = options.httpAdapter.context;
   }
 
-  handleRequest() {
+  async handleRequest() {
     const { event, context } = this;
     try {
       const requestOptions = mapApiGatewayEventToHttpRequest({
         event,
         context,
       });
-      const out = this.run(requestOptions);
+      const out = await this.run(requestOptions);
 
       if (!out) {
         throw new Error('no output from application');

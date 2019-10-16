@@ -31,11 +31,11 @@ export class CampkitApplication {
     this.appInstance = options.module;
   }
 
-  protected run(requestOptions: any) {
+  protected async run(requestOptions: any) {
     const { appInstance } = this;
     const appInstanceMetadata = getAppMetadata(appInstance);
     const appClass = new appInstance(appInstanceMetadata);
-    const appOutput = appClass.run(requestOptions);
+    const appOutput = await appClass.run(requestOptions);
 
     if (!appOutput) {
       throw Error('no app output');
