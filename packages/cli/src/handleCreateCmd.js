@@ -127,10 +127,12 @@ async function installServiceDeps(pathToService, serviceName, templateName) {
   );
 
   // fix babelrc
-  await fs.move(
-    path.resolve(pathToService, './babelrc'),
-    path.resolve(pathToService, './.babelrc')
-  );
+  if (path.resolve(pathToService, './babelrc')) {
+    await fs.move(
+      path.resolve(pathToService, './babelrc'),
+      path.resolve(pathToService, './.babelrc')
+    );
+  }
 
   // Install deps
   process.chdir(pathToService);
