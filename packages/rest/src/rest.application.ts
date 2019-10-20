@@ -74,13 +74,13 @@ export class RestApp {
   }
 
   private invokeRoute(route: any) {
-    const { handler, params, query, body } = route;
+    const { handler, params, query, body, headers } = route;
 
     if (!handler) {
       throw new Error('no handler for route');
     }
 
-    return handler({ params, query, body: this.parseBody(body) });
+    return handler({ headers, params, query, body: this.parseBody(body) });
   }
 
   private parseBody(maybeJSON) {

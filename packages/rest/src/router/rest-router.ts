@@ -40,7 +40,7 @@ export class RestRouter {
    * example: "/users/123" -> "/users/:id"
    */
   public find() {
-    const { path, body } = this.httpRequest;
+    const { path, body, headers } = this.httpRequest;
     const route = this.router.lookup(this.pathWithoutQueryString);
     const queryStringParams = ('' + path).split('?')[1];
 
@@ -54,6 +54,7 @@ export class RestRouter {
     let augmentedRoute = {
       ...route,
       query: qs,
+      headers,
     };
 
     if (body) {
