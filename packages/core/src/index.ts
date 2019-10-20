@@ -7,3 +7,4 @@ export * from './common';
 export { CampkitFactory } from './campkit-factory';
 export * from './app.decorator';
 export { CampkitHTTPRequest } from './campkit.application';
+export * from './campkit';

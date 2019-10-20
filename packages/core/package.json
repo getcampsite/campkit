@@ -46,6 +46,10 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
+  "dependencies": {
+    "@middy/core": "1.0.0-alpha.47",
+    "@middy/http-json-body-parser": "1.0.0-alpha.47"
+  },
   "devDependencies": {
     "@types/aws-lambda": "8.10.33",
     "@types/jest": "^24.0.18",
