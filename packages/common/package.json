@@ -1,0 +1,57 @@
+{
+  "name": "@campkit/common",
+  "version": "0.0.1",
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "Roger Rodriguez <roger@rrod.co>",
+  "description": "Build serverless Node.js microservices fast",
+  "license": "MIT",
+  "homepage": "https://github.com/getcampsite/campkit/tree/master/packages/common",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/getcampsite/campkit.git"
+  },
+  "keywords": [
+    "microservice",
+    "serverless",
+    "node microservice",
+    "campkit"
+  ],
+  "bugs": {
+    "url": "https://github.com/getcampsite/campkit/issues"
+  },
+  "main": "dist/index.js",
+  "module": "dist/campkit-common.esm.production.min.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "prepare": "npm run-script build",
+    "start": "tsdx watch --target node --format cjs,esm --name campkit-common --env production",
+    "build": "tsdx build --target node --format cjs,esm --name campkit-common --env production",
+    "test": "tsdx test",
+    "lint": "tsdx lint"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "8.10.33",
+    "@types/jest": "24.0.19",
+    "husky": "3.0.9",
+    "reflect-metadata": "0.1.13",
+    "tsdx": "0.10.5",
+    "tslib": "1.10.0",
+    "typescript": "3.6.4"
+  }
+}
