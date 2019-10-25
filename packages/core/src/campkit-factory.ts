@@ -13,7 +13,7 @@ interface CampkitFactoryOptions {
 /**
  * CampkitFactoryStatic
  */
-export class CampkitFactoryStatic {
+class CampkitFactoryStatic {
   public async create(
     module: any,
     httpAdapter: any,

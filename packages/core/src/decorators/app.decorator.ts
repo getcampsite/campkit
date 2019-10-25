@@ -1,16 +1,12 @@
 export interface AppOptions {
   name: string;
-  controllers: any[];
-  onSuccess?(): any;
-  onError?(): any;
+  restController?: any;
+  eventController?: any;
 }
 
 export function App(options: AppOptions): ClassDecorator {
   return (target: object) => {
-    // logger.log({ options, target });
-    // const appName = options.name;
     Reflect.defineMetadata('app', options, target);
-    // Reflect.defineMetadata(SCOPE_OPTIONS_METADATA, scopeOptions, target);
   };
 }
 

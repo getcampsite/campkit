@@ -1,23 +1,23 @@
 /**
  * External
  */
-import { APIGatewayProxyEvent, Context } from 'aws-lambda';
 import * as url from 'url';
+import {
+  APIGatewayProxyEvent,
+  Context,
+  APIGatewayProxyResult,
+} from 'aws-lambda';
+import { Logger, HttpRequest, HttpMethod } from '@campkit/common';
 
 /**
  * Internal
  */
-import { Logger } from './common';
-import {
-  CampkitApplication,
-  CampkitApplicationOptions,
-  CampkitHTTPRequest,
-} from './campkit.application';
+import { CampkitApplication } from './campkit.application';
+import { CampkitApplicationOptions } from './types/index';
 
 /**
  * Interfaces
  */
-
 interface LambdaEvent extends APIGatewayProxyEvent {
   isOffline?: boolean;
 }
@@ -29,10 +29,12 @@ interface LambdaInput {
   context: LambdaContext;
 }
 
-interface LambdaOutput {
-  statusCode?: number;
-  headers?: object;
-  body: object;
+interface LambdaOutput extends APIGatewayProxyResult {
+  statusCode: number;
+  headers?: {
+    [header: string]: boolean | number | string;
+  };
+  body: string;
 }
 
 interface AWSLambdaApplicationOptions extends CampkitApplicationOptions {
@@ -41,6 +43,9 @@ interface AWSLambdaApplicationOptions extends CampkitApplicationOptions {
 
 const logger = new Logger('AWSLambdaApplication');
 
+/**
+ * AWSLambdaApplication inherits from CampkitApplication
+ */
 export class AWSLambdaApplication extends CampkitApplication {
   private event: LambdaEvent;
   private context: LambdaContext;
@@ -54,48 +59,106 @@ export class AWSLambdaApplication extends CampkitApplication {
   async handleRequest() {
     const { event, context } = this;
     try {
-      const requestOptions = mapApiGatewayEventToHttpRequest({
-        event,
-        context,
-      });
-      const out = await this.run(requestOptions);
-
-      if (!out) {
-        throw new Error('no output from application');
+      const eventType = this.determineLambdaInvocationType(event);
+      switch (eventType) {
+        case 'http':
+          return this.handleHttpRequest();
+        case 'authorizer':
+          return this.handleAuthorizerRequest();
+        case 'event':
+          return this.handleEventRequest();
+        default:
+          throw new Error('Lambda event unknown');
       }
-
-      const res = this.handleLambdaResponse(context, {
-        body: out,
-      });
-
-      return super.handleResponse(res);
     } catch (error) {
       logger.log(error);
-      const res = this.handleLambdaResponse(context, {
-        statusCode: 502,
-        body: { error: error.message, type: error.name },
-      });
-      return super.handleResponse(res, true);
     }
   }
 
-  handleLambdaResponse(_context: Context, response: LambdaOutput) {
-    const { statusCode = 200, headers = {}, body = {} } = response;
+  /**
+   *
+   * @param _context
+   * @param response
+   */
+  handleLambdaResponse(response: LambdaOutput): LambdaOutput {
+    const { statusCode = 200, headers = {}, body } = response;
     return {
       statusCode,
-      headers: {
-        ...headers,
-        'x-campkit': true,
-      },
-      body: JSON.stringify(body),
-    };
+      headers,
+      body,
+    } as LambdaOutput;
+  }
+
+  /**
+   *
+   * @param event
+   */
+  determineLambdaInvocationType(event: LambdaEvent) {
+    if (event.hasOwnProperty('authorizationToken')) {
+      return 'authorizer';
+    }
+
+    if (event.hasOwnProperty('triggerSource')) {
+      return 'event';
+    }
+
+    return 'http';
+  }
+
+  /**
+   *
+   */
+  async handleHttpRequest() {
+    const { event, context } = this;
+    try {
+      const httpRequest = mapApiGatewayEventToHttpRequest({ event, context });
+      const responseToHttpRequest = await this.runRestApplication(httpRequest);
+
+      if (!responseToHttpRequest) {
+        throw new Error('no response from the http request');
+      }
+
+      const res = this.handleLambdaResponse({
+        statusCode: 200,
+        body: JSON.stringify(responseToHttpRequest),
+      });
+
+      return this.handleRestApplicationResponse(res);
+    } catch (error) {
+      logger.log(error, 'handleHttpRequest');
+      const res = this.handleLambdaResponse({
+        statusCode: 502,
+        body: JSON.stringify({ error: error.message, type: error.name }),
+      });
+      return this.handleRestApplicationResponse(res, true);
+    }
+  }
+
+  handleAuthorizerRequest() {
+    // const { event, context } = this;
+  }
+
+  async handleEventRequest() {
+    const { event } = this;
+    try {
+      const responseToEventRequest = await this.runEventApplication(event);
+
+      if (!responseToEventRequest) {
+        throw new Error('no response from the event request');
+      }
+
+      return responseToEventRequest;
+    } catch (error) {
+      logger.log(error, 'handleEventRequest');
+      return error;
+    }
   }
 }
 
 function mapApiGatewayEventToHttpRequest({
   event,
   context,
-}: LambdaInput): CampkitHTTPRequest {
+}: LambdaInput): HttpRequest {
   const headers = Object.assign(
     {
       'Content-Length': 0,
@@ -120,11 +183,11 @@ function mapApiGatewayEventToHttpRequest({
   headers['x-apigateway-context'] = encodeURIComponent(JSON.stringify(context));
 
   return {
-    method: event.httpMethod,
+    method: event.httpMethod as HttpMethod,
     path: getPathWithQueryStringParams(event),
     headers,
     body: getEventBody(event),
-  };
+  } as HttpRequest;
 }
 
 function getPathWithQueryStringParams(event: LambdaEvent) {
