@@ -1,12 +1,14 @@
-import 'reflect-metadata';
-import { Logger } from '@campkit/core';
+/***
+ * External
+ */
+import { Logger } from '@campkit/common';
 
-const PATH_METADATA = 'path';
-export const SCOPE_OPTIONS_METADATA = 'scope:options';
+/**
+ * Internal
+ */
+import { Controller } from '../controller.component';
 
-const logger = new Logger('@Controller');
-
-const ControllerMetadata = Symbol('Controller');
+const logger = new Logger('@RestController');
 
 /**
  * Interface defining options that can be passed to `@Controller()` decorator
@@ -16,36 +18,31 @@ const ControllerMetadata = Symbol('Controller');
  */
 export interface ControllerOptions {
   readonly basePath?: string;
+  readonly authorizer?: any;
 }
 
 /**
- * Decorator that marks a class as a Nest controller that can receive inbound
+ * Decorator that marks a class as a controller that can receive inbound
  * requests and produce responses.
  *
  **/
-
-export function Controller(options: ControllerOptions): ClassDecorator {
-  const path = options.basePath;
-  const scopeOptions = 'scopeOptions';
-
-  // return (target: object) => {
-  //   logger.log({ options, path, target });
-  //   Reflect.defineMetadata(PATH_METADATA, path, target);
-  //   Reflect.defineMetadata(SCOPE_OPTIONS_METADATA, scopeOptions, target);
-  // };
-
+export function RestController(options: ControllerOptions): ClassDecorator {
   return (target: any) => {
     // logger.log({ options, target });
 
-    // const prefix = options.name;
-    // Reflect.defineMetadata('prefix', prefix, target);
     Reflect.defineMetadata(
       'routes.basePath',
       { basePath: options.basePath },
       target
     );
 
-    // Since routes are set by our methods this should almost never be true (except the controller has no methods)
+    // Associate our "private" Controller Class to the user's Controller metadata
+    // The campkit application will use this to invoke route logic
+    const controllerFactory = new Controller(target);
+    Reflect.defineMetadata('rest.controller', controllerFactory, target);
+
+    // Since routes are set by our methods this should almost never be true
+    // (except the controller has no methods)
     if (!Reflect.hasMetadata('routes', target)) {
       Reflect.defineMetadata('routes', [], target);
     }
@@ -63,4 +60,8 @@ export function getControllerOptionsMetadata(controllerClass) {
 export function getControllerMetadata(klass) {
   // return Reflect.getMetadata(ControllerMetadata, klass);
   return Reflect.getMetadata('routes', klass);
+}
+
+export function getRestControllerMetadata(controllerClass) {
+  return Reflect.getMetadata('rest.controller', controllerClass);
 }
