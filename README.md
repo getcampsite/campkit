@@ -30,15 +30,13 @@ npx @campkit/cli create someServiceName
 ## Works with provider
 
 - [x] Amazon Web Service - Lambda
-- [ ] Google Cloud Platform - Cloud functions
-- [ ] Microsoft Azure - Cloud functions
 
 ## At a glance
 
 ```js
-import { Controller, Get, Post } from "@campkit/rest";
+import { RestController, Get, Post } from "@campkit/rest";
 
-@Controller({
+@RestController({
   basePath: "/user"
 })
 export class UserController {
@@ -79,26 +77,23 @@ export const handler = async (event, context) => {
 // user.app.js
 
 import { App } from "@campkit/core";
-import { RestApp } from "@campkit/rest";
 import { UserController } from "./user.controller";
 
 @App({
   name: "user",
-  controllers: [UserController]
+  restController: UserController
 })
-export class UserApp extends RestApp {
-  constructor(options) {
-    super(options);
-  }
+export class UserApp {
+
 }
 ```
 
 ```js
 // user.controller.js
 
-import { Controller, Get, Post } from "@campkit/rest";
+import { RestController, Get, Post } from "@campkit/rest";
 
-@Controller({
+@RestController({
   basePath: "/user"
 })
 export class UserController {
