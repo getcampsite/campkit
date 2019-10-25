@@ -1,6 +1,6 @@
 {
   "name": "@campkit/core",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "publishConfig": {
     "access": "public"
   },
@@ -44,9 +44,6 @@
     "semi": true,
     "singleQuote": true,
     "trailingComma": "es5"
-  },
-  "dependencies": {
-    
   },
   "peerDependencies": {
     "@campkit/common": "^0.0.x",

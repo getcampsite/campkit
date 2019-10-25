@@ -1,6 +1,6 @@
 {
   "name": "@campkit/rest",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "publishConfig": {
     "access": "public"
   },
@@ -45,8 +45,8 @@
     "reflect-metadata": "0.1.13"
   },
   "peerDependencies": {
-    "@campkit/core": "^0.0.8",
-    "@campkit/common": "^0.0.1"
+    "@campkit/common": "^0.0.1",
+    "@campkit/core": "^0.0.8"
   },
   "devDependencies": {
     "@types/aws-lambda": "8.10.33",
