@@ -110,6 +110,11 @@ export class AWSLambdaApplication extends CampkitApplication {
    */
   async handleHttpRequest() {
     const { event, context } = this;
+    const corsHeaders = {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': true,
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+    };
     try {
       const httpRequest = mapApiGatewayEventToHttpRequest({ event, context });
       const responseToHttpRequest = await this.runRestApplication(httpRequest);
@@ -119,6 +124,7 @@ export class AWSLambdaApplication extends CampkitApplication {
       }
 
       const res = this.handleLambdaResponse({
+        headers: corsHeaders,
         statusCode: 200,
         body: JSON.stringify(responseToHttpRequest),
       });
@@ -127,6 +133,7 @@ export class AWSLambdaApplication extends CampkitApplication {
     } catch (error) {
       logger.log(error, 'handleHttpRequest');
       const res = this.handleLambdaResponse({
+        headers: corsHeaders,
         statusCode: 502,
         body: JSON.stringify({ error: error.message, type: error.name }),
       });

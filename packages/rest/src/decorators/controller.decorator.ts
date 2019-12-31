@@ -17,8 +17,9 @@ const logger = new Logger('@RestController');
  *
  */
 export interface ControllerOptions {
-  readonly basePath?: string;
+  readonly basePath: string;
   readonly authorizer?: any;
+  readonly cors?: boolean;
 }
 
 /**
@@ -33,6 +34,16 @@ export function RestController(options: ControllerOptions): ClassDecorator {
     Reflect.defineMetadata(
       'routes.basePath',
       { basePath: options.basePath },
+      target
+    );
+
+    Reflect.defineMetadata(
+      'rest.controller.options',
+      {
+        basePath: options.basePath,
+        cors: options.cors || true,
+        authorizer: options.authorizer,
+      },
       target
     );
 
@@ -64,4 +75,8 @@ export function getControllerMetadata(klass) {
 
 export function getRestControllerMetadata(controllerClass) {
   return Reflect.getMetadata('rest.controller', controllerClass);
+}
+
+export function getRestControllerOptionsMetadata(controllerClass) {
+  return Reflect.getMetadata('rest.controller.options', controllerClass);
 }
