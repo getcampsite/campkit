@@ -62,7 +62,7 @@ async function handleTemplateCreation(templateName, servicePath, serviceName) {
 
 async function moveServiceTemplateToUserDir(servicePath, templateName) {
   return fs.copy(
-    path.resolve(__dirname, `../templates/${templateName}`),
+    path.resolve(__dirname, `./templates/${templateName}`),
     servicePath,
     {
       overwrite: true,

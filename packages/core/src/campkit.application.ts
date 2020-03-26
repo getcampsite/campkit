@@ -1,6 +1,11 @@
 /**
  * External
  */
+import {
+  APIGatewayProxyEvent,
+  Context,
+  APIGatewayProxyResult,
+} from 'aws-lambda';
 import { Logger } from '@campkit/common';
 import { getRestControllerMetadata } from '@campkit/rest';
 import { getEventControllerMetadata } from '@campkit/event';
@@ -10,13 +15,38 @@ import { getEventControllerMetadata } from '@campkit/event';
  */
 import { getAppMetadata } from './decorators';
 import { CampkitApplicationOptions } from './types';
+import { LambdaApplication } from './lambda.application';
+
+/**
+ * Interfaces
+ */
+interface LambdaEvent extends APIGatewayProxyEvent {
+  isOffline?: boolean;
+}
+
+interface LambdaContext extends Context {}
+
+interface LambdaInput {
+  event: LambdaEvent;
+  context: LambdaContext;
+}
 
 const logger = new Logger('class CampkitApplication');
 
 export interface CampkitApplicationOptions {
   module: any;
 }
-export class CampkitApplication {
+
+export class CampkitApplication extends LambdaApplication {
+  constructor(event: LambdaEvent, options: any) {
+    super();
+    this.deploy(options);
+  }
+
+  async deploy(options): Promise<any> {}
+}
+
+export class _CampkitApplication {
   private appInstance: any;
 
   constructor(options: CampkitApplicationOptions) {
