@@ -1,6 +1,7 @@
 /*
  * Campkit @event
  */
-import 'reflect-metadata';
 
-export * from './decorators';
+export default function event() {
+  console.log('event');
+}

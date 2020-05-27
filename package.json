@@ -4,22 +4,35 @@
     "packages/*"
   ],
   "scripts": {
-    "start": "lerna bootstrap",
-    "postinstall": "lerna bootstrap",
-    "makelive": "lerna publish",
-    "list": "lerna ls",
-    "clean": "node ./scripts/clean.js",
-    "test": "node ./scripts/test.js",
-    "changelog": "lerna-changelog",
-    "format": "prettier --write 'packages/**/*.{js,ts,json}'",
-    "dev:start": "lerna exec --parallel -- yarn start",
-    "dev:lint": "lerna exec --parallel -- yarn lint",
-    "dev:build": "lerna exec --parallel -- yarn build"
+    "build": "npm-run-all format:code format:packages lerna:build",
+    "clean": "npm-run-all lerna:clean remove:modules remove:cache",
+    "format:code": "prettier --write 'packages/**/*.{js,ts,json}'",
+    "format:packages": "sort-package-json 'package.json' 'packages/*/package.json'",
+    "postinstall": "npm-run-all lerna:bootstrap",
+    "lerna:bootstrap": "lerna bootstrap",
+    "lerna:build": "lerna exec --parallel -- npm run build",
+    "lerna:changelog": "lerna-changelog",
+    "lerna:clean": "lerna exec --parallel -- npm run clean",
+    "lerna:lint": "lerna exec --parallel -- npm run lint",
+    "lerna:publish": "lerna publish",
+    "lerna:start": "lerna exec --parallel -- npm run start",
+    "linkcli": "cd packages/cli && npm link",
+    "postupdate": "npm-run-all lerna:bootstrap",
+    "remove:cache": "rm -rf .build_cache",
+    "remove:modules": "rm -rf node_modules",
+    "start": "npm-run-all format:code format:packages lerna:start"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm-run-all format:code format:packages"
+    }
   },
   "devDependencies": {
-    "lerna": "3.16.4",
-    "lerna-changelog": "0.8.2",
-    "prettier": "1.18.2",
-    "rimraf": "3.0.0"
+    "husky": "4.2.3",
+    "lerna": "3.20.2",
+    "lerna-changelog": "1.0.1",
+    "npm-run-all": "4.1.5",
+    "prettier": "2.0.4",
+    "sort-package-json": "1.41.0"
   }
 }

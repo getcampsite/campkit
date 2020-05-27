@@ -2,8 +2,8 @@ const chalk = require('chalk');
 const fs = require('fs-extra');
 const webpack = require('webpack');
 
-const configFactory = require('./webpack.config');
 const paths = require('../../utils/paths');
+const configFactory = require('./webpack.config');
 
 // Do this as the first thing so that any code reading it knows the right env.
 process.env.NODE_ENV = 'production';
@@ -15,6 +15,23 @@ async function build(pkg, options) {
     console.log(chalk.cyan(``));
 
     const { source, destination } = pkg;
+
+    // var dir = './.campkit';
+
+    // if (!fs.existsSync(dir)) {
+    //   fs.mkdirSync(dir);
+    // }
+
+    // const exampleBuildManifest = {
+    //   functions: {
+    //     userCreate: ['static/runtime/usercreate_a6769f6852830251a132.js'],
+    //   },
+    // };
+
+    // fs.outputFileSync(
+    //   '.campkit/build-manifest.json',
+    //   JSON.stringify(exampleBuildManifest)
+    // );
 
     const config = configFactory({
       stage: 'prod',
@@ -64,6 +81,22 @@ function compileCode(compiler) {
     });
   });
 }
+
+// function parseCampkitConfig(destination) {
+//   const srcPath = paths.resolve(destination + '/main');
+//   const entryFile = require(srcPath);
+//   const config = entryFile.config();
+
+//   const { runtime, region, stage, functions } = config;
+
+//   console.log(config);
+
+//   // console.log(functions);
+
+//   functions.forEach(func => {
+//     console.log(func);
+//   });
+// }
 
 module.exports = {
   build,

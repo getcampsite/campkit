@@ -89,10 +89,10 @@ async function renameServiceTemplateFiles(pathToService, serviceName) {
 
   files = fs.readdirSync(pathToService);
   files
-    .filter(function(file) {
+    .filter(function (file) {
       return file.match(match);
     })
-    .forEach(function(file) {
+    .forEach(function (file) {
       const filePath = path.join(pathToService, file);
       const newFilePath = path.join(
         pathToService,
@@ -109,7 +109,7 @@ async function getProjectPath(projectPath, pkg) {
         pkg
       )} already exists! ${chalk.bold('Choose a different name')}`,
       initial: pkg + '-1',
-      result: v => v.trim(),
+      result: (v) => v.trim(),
     });
     pkg = await prompt.run();
     projectPath = fs.realpathSync(process.cwd()) + '/' + pkg;

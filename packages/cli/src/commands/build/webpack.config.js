@@ -1,7 +1,7 @@
 const { resolve } = require('path');
 const webpack = require('webpack');
 
-module.exports = options => {
+module.exports = (options) => {
   const { stage = 'prod', source, destination } = options;
 
   return {

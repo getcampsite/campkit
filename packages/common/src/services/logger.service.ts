@@ -14,9 +14,9 @@ const LOG_LEVELS = {
 //   ERROR: 5
 // }
 
-function prop<T, K extends keyof T>(obj: T, key: K) {
-  return obj[key];
-}
+// function prop<T, K extends keyof T>(obj: T, key: K) {
+//   return obj[key];
+// }
 
 // const level = prop(LOG_LEVELS, '')
 
@@ -28,14 +28,6 @@ export class Logger {
     this.context = context;
     this.level = process.env.LOG_LEVEL || level;
   }
-
-  // log(message: any, message2?: any) {
-  //   console.log(' ');
-  //   console.log(`---- ${this.context} -----`);
-  //   console.log(' ');
-  //   console.log(message, message2 || '');
-  //   console.log(' ');
-  // }
 
   _padding(n: number) {
     return n < 10 ? '0' + n : '' + n;
@@ -54,8 +46,8 @@ export class Logger {
 
   private _log(type: string, ...msg: any[]) {
     let loggerLevelName = this.level;
-    const loggerLevel = LOG_LEVELS[loggerLevelName] as number;
-    const typeLevel = LOG_LEVELS[type];
+    const loggerLevel = (LOG_LEVELS as any)[loggerLevelName] as number;
+    const typeLevel = (LOG_LEVELS as any)[type];
 
     if (!(typeLevel >= loggerLevel)) {
       // Do nothing if type is not greater than or equal to logger level (handle undefined)

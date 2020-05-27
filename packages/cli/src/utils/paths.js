@@ -9,5 +9,5 @@ function resolvePath(relativePath) {
 
 module.exports = {
   root: resolvePath('./'),
-  resolve: path => resolvePath(path),
+  resolve: (path) => resolvePath(path),
 };

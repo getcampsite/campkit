@@ -1,16 +1,16 @@
 {
   "version": "independent",
-  "packages": ["packages/*"],
   "npmClient": "yarn",
   "useWorkspaces": true,
+  "packages": ["packages/*"],
   "command": {
+    "bootstrap": {
+      "ignore": "",
+      "npmClientArgs": ["--no-package-lock"]
+    },
     "publish": {
       "ignoreChanges": ["ignored-file", "*.md"],
       "message": "chore(release): publish"
-    },
-    "bootstrap": {
-      "ignore": "component-*",
-      "npmClientArgs": ["--no-package-lock"]
     },
     "clean": {}
   },

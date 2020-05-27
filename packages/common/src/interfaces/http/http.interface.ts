@@ -13,7 +13,8 @@ export interface HttpRequest {
     | HttpMethod.PATCH
     | HttpMethod.OPTIONS
     | HttpMethod.HEAD;
-  path: string;
+  params: GenericObject;
   headers: GenericObject;
+  query: GenericObject;
   body: GenericObject; // null | json.stringify | {}
 }

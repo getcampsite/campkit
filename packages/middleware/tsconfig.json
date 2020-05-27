@@ -4,7 +4,7 @@
   "compilerOptions": {
     "rootDir": "./src",
     "outDir": "./dist",
-    "tsBuildInfoFile": "../../.build-cache/core.tsbuildinfo"
+    "tsBuildInfoFile": "../../.build-cache/http.tsbuildinfo"
   },
   "references": [
     {

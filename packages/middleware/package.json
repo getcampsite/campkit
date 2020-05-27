@@ -1,6 +1,6 @@
 {
-  "name": "@campkit/common",
-  "version": "0.0.3",
+  "name": "@campkit/middleware",
+  "version": "0.0.1",
   "description": "Build serverless Node.js microservices fast",
   "keywords": [
     "microservice",
@@ -8,7 +8,7 @@
     "node microservice",
     "campkit"
   ],
-  "homepage": "https://github.com/getcampsite/campkit/tree/master/packages/common",
+  "homepage": "https://github.com/getcampsite/campkit/tree/master/packages/middleware",
   "bugs": {
     "url": "https://github.com/getcampsite/campkit/issues"
   },
@@ -26,19 +26,26 @@
   "scripts": {
     "build": "tsc -b",
     "clean": "rm -rf dist && rm -rf node_modules",
-    "prepare": "npm run-script build",
     "start": "tsc -w",
     "test": "echo \"Error: no test specified\" && exit 0"
   },
+  "dependencies": {
+    "ajv": "6.12.0",
+    "query-string": "6.8.3",
+    "radix-router": "3.0.1"
+  },
   "devDependencies": {
+    "@campkit/common": "0.0.x",
+    "@campkit/core": "^0.0.x",
     "@types/aws-lambda": "8.10.46",
+    "@types/jest": "25.1.4",
+    "husky": "4.2.3",
+    "tsdx": "0.13.1",
     "tslib": "1.11.1",
     "typescript": "3.8.3"
   },
+  "peerDependencies": {},
   "engines": {
     "node": ">=10"
-  },
-  "publishConfig": {
-    "access": "public"
   }
 }

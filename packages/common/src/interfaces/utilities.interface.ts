@@ -3,9 +3,9 @@ export interface GenericObject {
 }
 
 export const debug = (...debugArgs: any): MethodDecorator => {
-  return function(target, name, descriptor: PropertyDescriptor) {
+  return function (_target, name, descriptor: PropertyDescriptor) {
     const method = descriptor.value;
-    descriptor.value = function(...args: any) {
+    descriptor.value = function (...args: any) {
       console.log(debugArgs);
       console.log(`Calling ${String(name)} with arguments: %o`, args);
       let result = method.apply(this, args);
